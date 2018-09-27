@@ -3,7 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microservice.PreTest", "Microservice.PreTest\Microservice.PreTest.csproj", "{7C8FC994-02FA-438A-95FB-EA14F530FFCB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{8BA414D6-1E40-4835-AEA6-518061AF9F8E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{097B45C2-0E58-4D68-A1FF-58EE88A103F9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventBus", "EventBus", "{698F6EFC-CBE4-4B84-9B52-38978459A4EE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console Apps", "Console Apps", "{69E1C2F2-5B34-4C03-9DF6-6472433036BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rabbitmq.Publisher", "src\Console Apps\Microservice.PreTest\Rabbitmq.Publisher.csproj", "{94B5D0C7-7706-425F-A2CB-4006D07743DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBus", "src\BuildingBlocks\EventBus\ClassLibrary1\EventBus.csproj", "{FFE35BE2-A668-4919-8D68-06E3F2FCB52D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rebbitmq.Consumer", "src\Console Apps\Rebbitmq.Consumer\Rebbitmq.Consumer.csproj", "{1D39D093-5247-4D49-9250-D24D95D926C9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rabbitmq", "Rabbitmq", "{77D5C4F8-D57C-487A-92D2-32DC322C2EAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,13 +25,30 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7C8FC994-02FA-438A-95FB-EA14F530FFCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7C8FC994-02FA-438A-95FB-EA14F530FFCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7C8FC994-02FA-438A-95FB-EA14F530FFCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7C8FC994-02FA-438A-95FB-EA14F530FFCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94B5D0C7-7706-425F-A2CB-4006D07743DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94B5D0C7-7706-425F-A2CB-4006D07743DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94B5D0C7-7706-425F-A2CB-4006D07743DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94B5D0C7-7706-425F-A2CB-4006D07743DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFE35BE2-A668-4919-8D68-06E3F2FCB52D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFE35BE2-A668-4919-8D68-06E3F2FCB52D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFE35BE2-A668-4919-8D68-06E3F2FCB52D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFE35BE2-A668-4919-8D68-06E3F2FCB52D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D39D093-5247-4D49-9250-D24D95D926C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D39D093-5247-4D49-9250-D24D95D926C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D39D093-5247-4D49-9250-D24D95D926C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D39D093-5247-4D49-9250-D24D95D926C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8BA414D6-1E40-4835-AEA6-518061AF9F8E} = {097B45C2-0E58-4D68-A1FF-58EE88A103F9}
+		{698F6EFC-CBE4-4B84-9B52-38978459A4EE} = {8BA414D6-1E40-4835-AEA6-518061AF9F8E}
+		{69E1C2F2-5B34-4C03-9DF6-6472433036BC} = {097B45C2-0E58-4D68-A1FF-58EE88A103F9}
+		{94B5D0C7-7706-425F-A2CB-4006D07743DA} = {69E1C2F2-5B34-4C03-9DF6-6472433036BC}
+		{FFE35BE2-A668-4919-8D68-06E3F2FCB52D} = {698F6EFC-CBE4-4B84-9B52-38978459A4EE}
+		{1D39D093-5247-4D49-9250-D24D95D926C9} = {69E1C2F2-5B34-4C03-9DF6-6472433036BC}
+		{77D5C4F8-D57C-487A-92D2-32DC322C2EAD} = {8BA414D6-1E40-4835-AEA6-518061AF9F8E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03F15E2A-9272-4957-9E7A-355FD027D9F4}
