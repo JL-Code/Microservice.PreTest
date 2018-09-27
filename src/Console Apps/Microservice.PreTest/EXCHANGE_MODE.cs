@@ -4,7 +4,7 @@
     /// <summary>
     /// 交换模式
     /// </summary>
-    public class EXCHANGE_MODE
+    public static class EXCHANGE_MODE
     {
         /// <summary>
         /// 
