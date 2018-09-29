@@ -8,19 +8,21 @@ namespace Rabbitmq.Worker01
 {
     class Program
     {
+        const string QUEUE_NAME = "hello";
         static void Main(string[] args)
         {
+
             var factory = new ConnectionFactory() { HostName = "localhost" };
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
-                channel.QueueDeclare(queue: "task_queue",
-                                     durable: true,
+                channel.QueueDeclare(queue: QUEUE_NAME,
+                                     durable: false,
                                      exclusive: false,
                                      autoDelete: false,
                                      arguments: null);
 
-                channel.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);
+                //channel.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);
 
                 Console.WriteLine(" [*] Waiting for messages.");
 
@@ -38,7 +40,7 @@ namespace Rabbitmq.Worker01
 
                     channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
                 };
-                channel.BasicConsume(queue: "task_queue",
+                channel.BasicConsume(queue: QUEUE_NAME,
                                      autoAck: false,
                                      consumer: consumer);
 

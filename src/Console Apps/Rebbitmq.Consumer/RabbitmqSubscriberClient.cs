@@ -29,7 +29,7 @@ namespace Rebbitmq.Consumer
                 consumer.Registered += Consumer_Registered;
                 consumer.Received += Consumer_Received;
 
-                //告诉rabbitmq消息收到了
+                //开始监听队列
                 channel.BasicConsume(queue: QUEUE_NAME,
                            autoAck: true,
                            consumer: consumer);

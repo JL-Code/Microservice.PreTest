@@ -13,6 +13,8 @@ namespace Rabbitmq.Publisher
             {
                 input = Console.ReadLine();
                 publisher.Send(input);
+                publisher.Send(input);
+                publisher.Send(input);
                 Console.WriteLine("你输入字符串是：" + input);
             }
         }
