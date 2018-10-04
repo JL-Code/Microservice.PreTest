@@ -14,13 +14,14 @@
 
   <ItemGroup>
     <PackageReference Include="Consul" Version="0.7.2.6" />
+    <PackageReference Include="Grpc.Core" Version="1.15.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildingBlocks\ServiceGovernance\ServiceGovernance\ServiceGovernance.csproj" />
+    <ProjectReference Include="..\..\..\..\BuildingBlocks\ServiceGovernance\ServiceGovernance\ServiceGovernance.csproj" />
   </ItemGroup>
 
   <ItemGroup>

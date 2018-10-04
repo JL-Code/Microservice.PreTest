@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\BuildingBlocks\ServiceGovernance\ServiceGovernance\ServiceGovernance.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\ServiceGovernance\ServiceGovernance\ServiceGovernance.csproj" />
   </ItemGroup>
 
 </Project>

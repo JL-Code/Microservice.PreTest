@@ -13,4 +13,8 @@
     <PackageReference Include="WebApiClient.JIT" Version="0.2.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PaymentService\Payment.Contracts\Payment.Contracts.csproj" />
+  </ItemGroup>
+
 </Project>
