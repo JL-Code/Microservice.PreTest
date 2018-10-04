@@ -8,20 +8,20 @@ using System.Threading.Tasks;
 namespace Payment.Service.Controllers
 {
     /// <summary>
-    /// 健康检查
+    /// 默认
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class HealthController : ControllerBase
+    public class ValuesController : ControllerBase
     {
         /// <summary>
-        /// 健康检查
+        /// 默认
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok("Payment 服务存活且可用");
+            return Ok("我健康运行中...");
         }
     }
 }

@@ -4,6 +4,20 @@
         <name>Payment.Service</name>
     </assembly>
     <members>
+        <member name="T:Payment.Service.AppBuilderExtension">
+            <summary>
+            consul 注册扩展
+            </summary>
+        </member>
+        <member name="M:Payment.Service.AppBuilderExtension.RegisterConsul(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IApplicationLifetime,Microservice.PreTest.src.BuildingBlocks.ServiceGovernance.ServiceEntry)">
+            <summary>
+            注册服务到Consul
+            </summary>
+            <param name="app"></param>
+            <param name="lifetime"></param>
+            <param name="entry"></param>
+            <returns></returns>
+        </member>
         <member name="T:Payment.Service.Controllers.HealthController">
             <summary>
             健康检查
@@ -23,6 +37,24 @@
         <member name="M:Payment.Service.Controllers.PaymentController.Get">
             <summary>
             
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Payment.Service.Controllers.PaymentController.GetPaymentHistory(System.String)">
+            <summary>
+            获取指定账号的交易记录
+            </summary>
+            <param name="account">账号</param>
+            <returns></returns>
+        </member>
+        <member name="T:Payment.Service.Controllers.ValuesController">
+            <summary>
+            默认
+            </summary>
+        </member>
+        <member name="M:Payment.Service.Controllers.ValuesController.Get">
+            <summary>
+            默认
             </summary>
             <returns></returns>
         </member>

@@ -34,6 +34,23 @@
           "timeout": "5s"
         }
       ]
+    },
+    {
+      "id": "Notice.Service",
+      "name": "Notice.Service",
+      "tags": [
+        "primary"
+      ],
+      "address": "192.168.245.128",
+      "port": 8830,
+      "checks": [
+        {
+          "name": "health_check",
+          "http": "http://192.168.245.128:8830/api/health",
+          "interval": "10s",
+          "timeout": "5s"
+        }
+      ]
     }
   ]
 }

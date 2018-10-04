@@ -5,9 +5,19 @@ using System;
 
 namespace Payment.Service
 {
-    public class AppBuilderExtension
+    /// <summary>
+    /// consul 注册扩展
+    /// </summary>
+    public static class AppBuilderExtension
     {
-        public static IApplicationBuilder RegisterConsul(this IApplicationBuilder app, IApplicationLifetime lifetime, Service.Governance.ServiceEntry entry)
+        /// <summary>
+        /// 注册服务到Consul
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="lifetime"></param>
+        /// <param name="entry"></param>
+        /// <returns></returns>
+        public static IApplicationBuilder RegisterConsul(this IApplicationBuilder app, IApplicationLifetime lifetime, Microservice.PreTest.src.BuildingBlocks.ServiceGovernance.ServiceEntry entry)
         {
             //请求注册的 Consul 地址
             var consulClient = new ConsulClient(x => x.Address = new Uri($"http://{entry.ConsulIP}:{entry.ConsulPort}"));

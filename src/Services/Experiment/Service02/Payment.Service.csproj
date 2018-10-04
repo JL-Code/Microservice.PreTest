@@ -20,7 +20,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildingBlocks\Infrastructure\Service.Governance\ServiceGovernance.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\ServiceGovernance\ServiceGovernance\ServiceGovernance.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Payment.Service.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
