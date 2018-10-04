@@ -4,6 +4,28 @@
         <name>Payment.Service</name>
     </assembly>
     <members>
+        <member name="T:Payment.Service.Controllers.HealthController">
+            <summary>
+            健康检查
+            </summary>
+        </member>
+        <member name="M:Payment.Service.Controllers.HealthController.Get">
+            <summary>
+            健康检查
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Payment.Service.Controllers.PaymentController">
+            <summary>
+            支付
+            </summary>
+        </member>
+        <member name="M:Payment.Service.Controllers.PaymentController.Get">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Payment.Service.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             This method gets called by the runtime. Use this method to add services to the container.
