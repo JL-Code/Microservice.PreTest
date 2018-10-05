@@ -1,10 +1,10 @@
 ﻿using Grpc.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using WebApiClient;
 
@@ -29,7 +29,7 @@ namespace ClientService.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "ClientService" };
         }
 
         /// <summary>
@@ -78,6 +78,17 @@ namespace ClientService.Controllers
             var total = watch.Elapsed.TotalMilliseconds;
             return Ok(message + "耗时：" + total);
 
+        }
+
+        [Authorize]
+        [HttpGet("user/info")]
+        public IActionResult GetUserInfo()
+        {
+            return Ok(new
+            {
+                UserName = "jiangy",
+                Age = 26
+            });
         }
     }
 }

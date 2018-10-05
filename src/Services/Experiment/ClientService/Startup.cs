@@ -24,7 +24,20 @@ namespace ClientService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            #region IdentityServer4
+
+            services.AddMvcCore().AddAuthorization().AddJsonFormatters();
+            services.AddAuthentication(Configuration["Identity:Scheme"])
+                .AddIdentityServerAuthentication(options =>
+                {
+                    options.RequireHttpsMetadata = false; // for dev env
+                    options.Authority = $"http://{Configuration["Identity:Address"]}:{Configuration["Identity:Port"]}";
+                    options.ApiName = Configuration["Service:Name"]; // match with configuration in IdentityServer
+                });
+
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,6 +47,9 @@ namespace ClientService
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // authentication
+            app.UseAuthentication();
 
             app.UseMvc();
         }

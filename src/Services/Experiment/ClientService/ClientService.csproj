@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="WebApiClient.JIT" Version="0.2.1" />
   </ItemGroup>
@@ -16,5 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PaymentService\Payment.Contracts\Payment.Contracts.csproj" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 
 </Project>
