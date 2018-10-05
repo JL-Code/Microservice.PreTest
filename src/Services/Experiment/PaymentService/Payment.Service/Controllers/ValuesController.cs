@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Payment.Service.Controllers
 {
@@ -15,13 +11,13 @@ namespace Payment.Service.Controllers
     public class ValuesController : ControllerBase
     {
         /// <summary>
-        /// 默认
+        /// GET api/values
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Get()
+        public ActionResult<IEnumerable<string>> Get()
         {
-            return Ok("我健康运行中...");
+            return new string[] { "payment.service1", "payment.service2" };
         }
     }
 }

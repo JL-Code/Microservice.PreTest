@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Service02": {
+    "Payment.Service": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",

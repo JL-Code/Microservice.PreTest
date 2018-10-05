@@ -1,5 +1,4 @@
 {
-  //服务配置信息
   "services": [
     {
       "id": "Payment.Service_01",
@@ -30,40 +29,6 @@
         {
           "name": "health_check",
           "http": "http://192.168.245.128:8820/api/health",
-          "interval": "10s",
-          "timeout": "5s"
-        }
-      ]
-    },
-    {
-      "id": "Payment.Service",
-      "name": "Payment.Service",
-      "tags": [
-        "primary"
-      ],
-      "address": "192.168.245.128",
-      "port": 8840,
-      "checks": [
-        {
-          "name": "health_check",
-          "http": "http://192.168.245.128:8840/api/health",
-          "interval": "10s",
-          "timeout": "5s"
-        }
-      ]
-    },
-    {
-      "id": "Ordering.Service",
-      "name": "Ordering.Service",
-      "tags": [
-        "primary"
-      ],
-      "address": "192.168.245.128",
-      "port": 8850,
-      "checks": [
-        {
-          "name": "health_check",
-          "http": "http://192.168.245.128:8850/api/health",
           "interval": "10s",
           "timeout": "5s"
         }

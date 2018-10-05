@@ -54,7 +54,7 @@
         </member>
         <member name="M:Payment.Service.Controllers.ValuesController.Get">
             <summary>
-            默认
+            GET api/values
             </summary>
             <returns></returns>
         </member>

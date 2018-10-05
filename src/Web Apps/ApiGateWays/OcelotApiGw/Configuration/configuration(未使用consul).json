@@ -3,25 +3,29 @@
     {
       "DownstreamPathTemplate": "/api/{endpoint}",
       "DownstreamScheme": "http",
-      "UseServiceDiscovery": true,
-      "ServiceName": "Payment.Service",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60811
+        }
+      ],
       "UpstreamPathTemplate": "/payment/{endpoint}",
-      "UpstreamHttpMethod": ["GET", "POST"]
+      "UpstreamHttpMethod": [ "GET", "POST" ]
     },
     {
       "DownstreamPathTemplate": "/api/{endpoint}",
       "DownstreamScheme": "http",
-      "UseServiceDiscovery": true,
-      "ServiceName": "Ordering.Service",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 50249
+        }
+      ],
       "UpstreamPathTemplate": "/ordering/{endpoint}",
-      "UpstreamHttpMethod": ["GET", "POST"]
+      "UpstreamHttpMethod": [ "GET", "POST" ]
     }
   ],
   "GlobalConfiguration": {
-    "ServiceDiscoveryProvider": {
-      "Host": "192.168.245.129",
-      "Port": 8500,
-      "Type": "Consul"
-    }
+
   }
 }

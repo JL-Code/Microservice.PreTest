@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Payment.Application\Payment.Application.csproj" />
     <ProjectReference Include="..\Payment.Contracts\Payment.Contracts.csproj" />
-    <ProjectReference Include="..\Payment.Service\Payment.Application\Payment.Application.csproj" />
   </ItemGroup>
 
 </Project>
