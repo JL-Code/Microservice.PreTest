@@ -30,14 +30,26 @@ namespace Payment.Service
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
             #region 添加swagger文档功能
 
             //配置swagger选项
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new Info { Title = "Payment.Service", Version = "v1" });
+                options.SwaggerDoc(Configuration["Service:DocName"], new Info
+                {
+                    Title = Configuration["Service:Title"],
+                    Version = Configuration["Service:Version"],
+                    Description = Configuration["Service:Description"],
+                    Contact = new Contact
+                    {
+                        Name = Configuration["Service:Contact:Name"],
+                        Email = Configuration["Service:Contact:Email"]
+                    }
+                });
+
                 //添加xml注释
-                var filePath = Path.Combine(AppContext.BaseDirectory, "Payment.Service.xml");
+                var filePath = Path.Combine(AppContext.BaseDirectory, $"{Configuration["Service:DocName"]}.xml");
                 options.IncludeXmlComments(filePath);
             });
             #endregion
@@ -55,14 +67,21 @@ namespace Payment.Service
                 app.UseDeveloperExceptionPage();
             }
 
+            #region 配置swagger ui
 
             //使用swagger
-            app.UseSwagger();
+            app.UseSwagger(c =>
+            {
+                c.RouteTemplate = "doc/{documentName}/swagger.json";
+            });
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Payment.Service Api V1");
+                c.SwaggerEndpoint($"/doc/{Configuration["Service:DocName"]}/swagger.json",
+                  $"{Configuration["Service:Name"]} {Configuration["Service:Version"]}");
             });
+
+            #endregion
 
             app.UseMvc();
         }

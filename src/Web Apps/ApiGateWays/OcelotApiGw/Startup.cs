@@ -7,6 +7,8 @@ using Microsoft.Extensions.Logging;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Ocelot.Provider.Consul;
+using Ocelot.Provider.Polly;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,9 +31,26 @@ namespace OcelotApiGw
         public void ConfigureServices(IServiceCollection services)
         {
             //使用Ocelot网关组件
+            //services.AddOcelot(_cfg)
+            //.AddConsul();
+            //利用Polly启用熔断功能
             services.AddOcelot(_cfg)
-                    .AddConsul();
+                    .AddPolly();
 
+            #region 添加swagger
+
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc($"{_cfg["Swagger:DocName"]}", new Info
+                {
+                    Title = _cfg["Swagger:Title"],
+                    Version = _cfg["Swagger:Version"]
+                });
+            });
+
+            #endregion
+
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,7 +62,29 @@ namespace OcelotApiGw
             }
             //添加控制台日志记录
             loggerFactory.AddConsole(_cfg.GetSection("Logging"));
-            
+
+            #region 配置swagger ui
+
+            // get from service discovery later
+            var apiList = new List<string>()
+            {
+                "Payment.Service",
+                "Ordering.Service"
+            };
+
+            app.UseMvc()
+                .UseSwagger()
+                .UseSwaggerUI(options =>
+                {
+                    apiList.ForEach(apiItem =>
+                    {
+                        options.SwaggerEndpoint($"/doc/{apiItem}/swagger.json", apiItem);
+                    });
+                });
+
+            #endregion
+
+            //Ocelot
             app.UseOcelot().Wait();
         }
     }

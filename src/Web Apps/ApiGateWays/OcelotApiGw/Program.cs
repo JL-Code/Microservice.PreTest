@@ -51,9 +51,9 @@ namespace OcelotApiGw
         public static IWebHost BuildWebHost(string[] args)
         {
             IWebHostBuilder builder = WebHost.CreateDefaultBuilder(args);
-            //???
+
             builder.ConfigureServices(s => s.AddSingleton(builder))
-                .ConfigureAppConfiguration(ic => ic.AddJsonFile(Path.Combine("configuration", "configuration.json"), false, true))
+                .ConfigureAppConfiguration(ic => ic.AddJsonFile(Path.Combine("configuration", "configuration_noconsul.json"), false, true))
                 .UseStartup<Startup>();
             IWebHost host = builder.Build();
             return host;

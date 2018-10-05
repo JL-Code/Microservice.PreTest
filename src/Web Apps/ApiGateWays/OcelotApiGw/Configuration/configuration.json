@@ -13,11 +13,25 @@
       "DownstreamScheme": "http",
       "UseServiceDiscovery": true,
       "ServiceName": "Ordering.Service",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "RateLimitOptions": {
+
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 2,
+        "DurationOfBreak": 5,
+        "TimeoutValue": 3000
+      },
       "UpstreamPathTemplate": "/ordering/{endpoint}",
-      "UpstreamHttpMethod": ["GET", "POST"]
+      "UpstreamHttpMethod": [ "GET", "POST" ]
     }
   ],
   "GlobalConfiguration": {
+    "RateLimitOptions": {
+
+    },
     "ServiceDiscoveryProvider": {
       "Host": "192.168.245.129",
       "Port": 8500,

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 
 namespace Payment.Service.Controllers
@@ -17,7 +18,9 @@ namespace Payment.Service.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "payment.service1", "payment.service2" };
+            var info = $"payment.service: {DateTime.Now.ToString()} {Environment.MachineName} " +
+                 $"OS: {Environment.OSVersion.VersionString}";
+            return new string[] { info };
         }
     }
 }
