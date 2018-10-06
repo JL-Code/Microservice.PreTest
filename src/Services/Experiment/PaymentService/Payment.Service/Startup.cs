@@ -1,26 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.IO;
 
 namespace Payment.Service
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public IConfiguration Configuration { get; }
 
         /// <summary>
@@ -53,6 +58,23 @@ namespace Payment.Service
                 options.IncludeXmlComments(filePath);
             });
             #endregion
+
+            #region 添加IdentityServer4 验证功能
+            //针对要保护的资源，我们需要以下配置：
+            //（1）指定资源是否需要保护； ===》使用[Authorize]特性，来显式指定受保护的资源
+            //（2）指定IdentityServer用来进行认证和授权跳转；
+            //（3）Client携带【Token】请求资源。
+            //（4）受保护的资源服务器要能够验证【Token】的正确性。
+            services.AddAuthentication(Configuration["IdentityService:DefaultScheme"])
+                 .AddIdentityServerAuthentication(options =>
+                 {
+                     options.Authority = Configuration["IdentityService:Uri"];
+                     options.ApiName = "payment.service";
+                     options.RequireHttpsMetadata = Convert.ToBoolean(Configuration["IdentityService:UseHttps"]);
+                 });
+
+            #endregion
+
         }
 
         /// <summary>
@@ -83,7 +105,11 @@ namespace Payment.Service
 
             #endregion
 
+
+            // IdentityServer
+            app.UseAuthentication();
             app.UseMvc();
+
         }
     }
 }

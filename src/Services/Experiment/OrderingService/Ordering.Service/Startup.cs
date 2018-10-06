@@ -3,26 +3,35 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Ordering.Service
 {
+    /// <summary>
+    /// 程序启动的时候调用
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// 相关配置信息接口
+        /// </summary>
         public IConfiguration Configuration { get; }
 
+        /// <summary>
+        /// 配置服务
+        /// </summary>
+        /// <param name="services"></param>
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -49,9 +58,26 @@ namespace Ordering.Service
                 var filePath = Path.Combine(AppContext.BaseDirectory, $"{Configuration["Service:DocName"]}.xml");
                 options.IncludeXmlComments(filePath);
             });
+
+            #endregion
+
+            #region 添加IdentityServer4 验证功能
+
+            services.AddAuthentication(Configuration["IdentityService:DefaultScheme"])
+            .AddIdentityServerAuthentication(options =>
+            {
+                options.Authority = Configuration["IdentityService:Uri"];
+                options.RequireHttpsMetadata = Convert.ToBoolean(Configuration["IdentityService:UseHttps"]);
+            });
+
             #endregion
         }
 
+        /// <summary>
+        /// 配置中间件
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -77,6 +103,9 @@ namespace Ordering.Service
             #endregion
 
             app.UseMvc();
+
+            // IdentityServer
+            app.UseAuthentication();
         }
     }
 }

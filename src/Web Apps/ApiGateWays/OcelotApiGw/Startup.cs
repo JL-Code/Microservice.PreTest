@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -50,6 +51,32 @@ namespace OcelotApiGw
 
             #endregion
 
+            // IdentityServer
+            #region IdentityServerAuthenticationOptions => need to refactor
+            Action<IdentityServerAuthenticationOptions> AuthOptPayment = option =>
+            {
+                option.Authority = _cfg["IdentityService:Uri"];
+                option.ApiName = "payment.service";
+                option.RequireHttpsMetadata = Convert.ToBoolean(_cfg["IdentityService:UseHttps"]);
+                option.SupportedTokens = SupportedTokens.Both;
+                //option.ApiSecret = _cfg["IdentityService:ApiSecrets:paymentservice"];
+            };
+
+            Action<IdentityServerAuthenticationOptions> AuthOptOrdering = option =>
+            {
+                option.Authority = _cfg["IdentityService:Uri"];
+                option.ApiName = "ordering.service";
+                option.RequireHttpsMetadata = Convert.ToBoolean(_cfg["IdentityService:UseHttps"]);
+                option.SupportedTokens = SupportedTokens.Both;
+                option.ApiSecret = _cfg["IdentityService:ApiSecrets:orderingservice"];
+            };
+            #endregion
+
+            //添加认证
+            services.AddAuthentication()
+                .AddIdentityServerAuthentication("PaymentServiceKey", AuthOptPayment)
+                .AddIdentityServerAuthentication("OrderingServiceKey", AuthOptOrdering);
+
             services.AddMvc();
         }
 
@@ -83,7 +110,6 @@ namespace OcelotApiGw
                 });
 
             #endregion
-
             //Ocelot
             app.UseOcelot().Wait();
         }

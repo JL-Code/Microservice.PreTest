@@ -9,6 +9,10 @@
           "Port": 60811
         }
       ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "PaymentServiceKey",
+        "AllowedScopes": []
+      },
       "UpstreamPathTemplate": "/payment/{endpoint}",
       "UpstreamHttpMethod": [ "GET", "POST" ]
     },
@@ -25,6 +29,10 @@
         "ExceptionsAllowedBeforeBreaking": 2,
         "DurationOfBreak": 5,
         "TimeoutValue": 3000
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "OrderingServiceKey",
+        "AllowedScopes": []
       },
       "UpstreamPathTemplate": "/ordering/{endpoint}",
       "UpstreamHttpMethod": [ "GET", "POST" ]
@@ -52,6 +60,19 @@
       ],
       "UpstreamPathTemplate": "/doc/Ordering.Service/swagger.json",
       "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/{url}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5000"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/identityservice/{url}",
+      "UpstreamHttpMethod": [ "Get", "Post" ]
+  
     }
   ],
   "GlobalConfiguration": {

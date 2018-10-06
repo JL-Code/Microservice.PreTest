@@ -30,9 +30,9 @@ namespace Identity.Service
         {
             return new[]
             {
-                new ApiResource("ordering.service", "JY Ordering Service"),
-                new ApiResource("payment.service", "JY Payment Service"),
-                new ApiResource("clientservice", "JY Agent Service")
+                new ApiResource("ordering.service"),
+                new ApiResource("payment.service"),
+                new ApiResource("clientservice")
             };
         }
 
@@ -46,17 +46,19 @@ namespace Identity.Service
             {
                 new Client
                 {
-                    ClientId = "client.api.service",
-                    ClientSecrets = new [] { new Secret("clientsecret".Sha256()) },
+                    ClientId = "payment.clientid",
+                    ClientSecrets = new [] { new Secret("payment.secret".Sha256()) },
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
-                    AllowedScopes = new [] { "ordering.service" }
+                    AllowedScopes = new [] {  "payment.service",
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile }
                 },
                 new Client
                 {
-                    ClientId = "product.api.service",
-                    ClientSecrets = new [] { new Secret("productsecret".Sha256()) },
+                    ClientId = "ordering.api.service",
+                    ClientSecrets = new [] { new Secret("orderingsecret".Sha256()) },
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
-                    AllowedScopes = new [] { "ordering.service", "payment.service" }
+                    AllowedScopes = new [] { "ordering.service" }
                 },
                 new Client
                 {
