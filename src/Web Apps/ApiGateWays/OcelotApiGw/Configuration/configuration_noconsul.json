@@ -13,6 +13,9 @@
         "AuthenticationProviderKey": "PaymentServiceKey",
         "AllowedScopes": []
       },
+      "HttpHandlerOptions": {
+        "UseTracing": true // use butterfly to tracing request chain
+      },
       "UpstreamPathTemplate": "/payment/{endpoint}",
       "UpstreamHttpMethod": [ "GET", "POST" ]
     },
@@ -33,6 +36,9 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "OrderingServiceKey",
         "AllowedScopes": []
+      },
+      "HttpHandlerOptions": {
+        "UseTracing": true // use butterfly to tracing request chain
       },
       "UpstreamPathTemplate": "/ordering/{endpoint}",
       "UpstreamHttpMethod": [ "GET", "POST" ]
@@ -70,9 +76,12 @@
           "Port": "5000"
         }
       ],
+      "HttpHandlerOptions": {
+        "UseTracing": true // use butterfly to tracing request chain
+      },
       "UpstreamPathTemplate": "/api/identityservice/{url}",
       "UpstreamHttpMethod": [ "Get", "Post" ]
-  
+
     }
   ],
   "GlobalConfiguration": {

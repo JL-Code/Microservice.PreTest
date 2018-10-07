@@ -1,4 +1,5 @@
-﻿using IdentityServer4.AccessTokenValidation;
+﻿using App.Metrics;
+using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -7,8 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
-using Ocelot.Provider.Consul;
-using Ocelot.Provider.Polly;
+//using Ocelot.Provider.Consul;
+//using Ocelot.Provider.Polly;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,12 @@ namespace OcelotApiGw
             //.AddConsul();
             //利用Polly启用熔断功能
             services.AddOcelot(_cfg)
-                    .AddPolly();
+                 .AddOpenTracing(option =>
+                 {
+                     option.CollectorUrl = _cfg["TracingCenter:Uri"];
+                     option.Service = _cfg["TracingCenter:Name"];
+                 });
+                 //.AddPolly();
 
             #region 添加swagger
 
@@ -70,14 +76,52 @@ namespace OcelotApiGw
                 option.SupportedTokens = SupportedTokens.Both;
                 option.ApiSecret = _cfg["IdentityService:ApiSecrets:orderingservice"];
             };
-            #endregion
 
             //添加认证
             services.AddAuthentication()
                 .AddIdentityServerAuthentication("PaymentServiceKey", AuthOptPayment)
                 .AddIdentityServerAuthentication("OrderingServiceKey", AuthOptOrdering);
 
-            services.AddMvc();
+            #endregion
+
+            #region 添加监控平台 AppMetrics服务注入
+
+            bool isOpenMetrics = Convert.ToBoolean(_cfg["AppMetrics:IsOpen"]);
+            if (isOpenMetrics)
+            {
+                string database = _cfg["AppMetrics:DatabaseName"];
+                string connStr = _cfg["AppMetrics:ConnectionString"];
+                string app = _cfg["AppMetrics:App"];
+                string env = _cfg["AppMetrics:Env"];
+                string username = _cfg["AppMetrics:UserName"];
+                string password = _cfg["AppMetrics:Password"];
+
+                var uri = new Uri(connStr);
+                var metrics = AppMetrics.CreateDefaultBuilder().Configuration.Configure(options =>
+                {
+                    options.AddAppTag(app);
+                    options.AddEnvTag(env);
+                }).Report.ToInfluxDb(options =>
+                {
+                    options.InfluxDb.BaseUri = uri;
+                    options.InfluxDb.Database = database;
+                    options.InfluxDb.UserName = username;
+                    options.InfluxDb.Password = password;
+                    options.HttpPolicy.BackoffPeriod = TimeSpan.FromSeconds(30);
+                    options.HttpPolicy.FailuresBeforeBackoff = 5;
+                    options.HttpPolicy.Timeout = TimeSpan.FromSeconds(10);
+                    options.FlushInterval = TimeSpan.FromSeconds(5);
+                }).Build();
+
+                services.AddMetrics(metrics);
+                services.AddMetricsReportScheduler();
+                services.AddMetricsTrackingMiddleware();
+                services.AddMetricsEndpoints();
+
+                #endregion
+
+                services.AddMvc();
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -110,6 +154,20 @@ namespace OcelotApiGw
                 });
 
             #endregion
+
+            #region 使用AppMetrics中间件
+
+            // AppMetrics
+            bool isOpenMetrics = Convert.ToBoolean(_cfg["AppMetrics:IsOpen"]);
+            if (isOpenMetrics)
+            {
+                app.UseMetricsAllEndpoints();
+                app.UseMetricsAllMiddleware();
+            }
+
+            #endregion
+
+
             //Ocelot
             app.UseOcelot().Wait();
         }

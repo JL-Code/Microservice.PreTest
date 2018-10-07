@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Butterfly.Client.AspNetCore;
+using Butterfly.Client.Tracing;
+using Core.Infrastructure;
+using Exceptionless;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -6,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
+using System.Net.Http;
 
 namespace Payment.Service
 {
@@ -75,6 +80,18 @@ namespace Payment.Service
 
             #endregion
 
+            #region Tracing - Butterfly
+
+            services.AddButterfly(option =>
+            {
+                option.CollectorUrl = Configuration["TracingCenter:Uri"];
+                option.Service = Configuration["TracingCenter:Name"];
+            });
+
+            services.AddSingleton(p => new HttpClient(p.GetService<HttpTracingHandler>()));
+
+            #endregion
+            services.AddSingleton<ILogger, ExceptionLessLogger>();
         }
 
         /// <summary>
@@ -109,7 +126,8 @@ namespace Payment.Service
             // IdentityServer
             app.UseAuthentication();
             app.UseMvc();
-
+            // exceptionless
+            app.UseExceptionless(Configuration["Exceptionless:ApiKey"]);
         }
     }
 }

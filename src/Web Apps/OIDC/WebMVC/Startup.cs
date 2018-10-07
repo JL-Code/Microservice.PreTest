@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Butterfly.Client.AspNetCore;
+using Butterfly.Client.Tracing;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -52,6 +55,19 @@ namespace WebMVC
                 options.ResponseType = "id_token token"; // allow to return access token
             options.SaveTokens = true;
             });
+
+            #endregion
+
+            #region 注册Butterfly 
+
+            // Tracing - Butterfly
+            services.AddButterfly(option =>
+            {
+                option.CollectorUrl = Configuration["TracingCenter:Uri"];
+                option.Service = Configuration["TracingCenter:Name"];
+            });
+
+            services.AddSingleton(p => new HttpClient(p.GetService<HttpTracingHandler>()));
 
             #endregion
         }

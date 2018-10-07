@@ -49,7 +49,7 @@ namespace Identity.Service
                     ClientId = "payment.clientid",
                     ClientSecrets = new [] { new Secret("payment.secret".Sha256()) },
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
-                    AllowedScopes = new [] {  "payment.service",
+                    AllowedScopes = new [] {  "payment.service","ordering.service",
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile }
                 },

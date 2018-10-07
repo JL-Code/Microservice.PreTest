@@ -52,9 +52,15 @@
             默认
             </summary>
         </member>
-        <member name="M:Payment.Service.Controllers.ValuesController.Get">
+        <member name="M:Payment.Service.Controllers.ValuesController.Get(Core.Infrastructure.ILogger)">
             <summary>
             GET api/values
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Payment.Service.Controllers.ValuesController.Trace">
+            <summary>
+            
             </summary>
             <returns></returns>
         </member>

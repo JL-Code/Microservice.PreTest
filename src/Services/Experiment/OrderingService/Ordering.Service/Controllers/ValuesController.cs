@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Core.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,18 +14,23 @@ namespace Ordering.Service.Controllers
     {
         private static int _count = 0;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<IEnumerable<string>> Get([FromServices] ILogger logger)
         {
             //模拟熔断
-            _count++;
-            if (_count <= 3)
-            {
-                Thread.Sleep(5000);
-            }
+            //_count++;
+            //if (_count <= 3)
+            //{
+            //    Thread.Sleep(5000);
+            //}
             var info = $"ordering.service: {DateTime.Now.ToString()} {Environment.MachineName} " +
                $"OS: {Environment.OSVersion.VersionString}";
+            logger.Info(info);
             return new string[] { info };
         }
 

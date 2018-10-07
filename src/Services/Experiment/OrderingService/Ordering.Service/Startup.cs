@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Butterfly.Client.AspNetCore;
+using Core.Infrastructure;
+using Exceptionless;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -71,6 +74,15 @@ namespace Ordering.Service
             });
 
             #endregion
+
+            // Tracing - Butterfly
+            services.AddButterfly(option =>
+            {
+                option.CollectorUrl = Configuration["TracingCenter:Uri"];
+                option.Service = Configuration["TracingCenter:Name"];
+            });
+
+            services.AddSingleton<ILogger, ExceptionLessLogger>();
         }
 
         /// <summary>
@@ -106,6 +118,9 @@ namespace Ordering.Service
 
             // IdentityServer
             app.UseAuthentication();
+
+            // exceptionless
+            app.UseExceptionless(Configuration["Exceptionless:ApiKey"]);
         }
     }
 }

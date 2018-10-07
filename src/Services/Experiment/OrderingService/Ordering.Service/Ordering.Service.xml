@@ -9,6 +9,12 @@
             健康检查
             </summary>
         </member>
+        <member name="M:Ordering.Service.Controllers.ValuesController.Get(Core.Infrastructure.ILogger)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Ordering.Service.Startup">
             <summary>
             程序启动的时候调用
